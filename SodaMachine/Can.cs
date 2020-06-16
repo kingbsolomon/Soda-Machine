@@ -4,7 +4,12 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class Can
+    abstract class Can
     {
+        // member variables
+
+        double Cost;
+        string name;
+
     }
 }

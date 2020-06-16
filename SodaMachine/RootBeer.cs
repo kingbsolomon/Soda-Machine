@@ -4,7 +4,11 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class RootBeer
+    class RootBeer:Can
     {
+        public RootBeer()
+        {
+
+        }
     }
 }

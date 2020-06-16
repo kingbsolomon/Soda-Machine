@@ -4,7 +4,13 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class Penny
+    class Penny:Coin
     {
+        public Penny()
+        {
+            value = 0.01;
+            name = "Penny";
+        }
+
     }
 }

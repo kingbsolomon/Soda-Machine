@@ -4,7 +4,10 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class Coin
+    public abstract class Coin
     {
+        protected double value;
+        public double Value { set; get; }
+        public string name;
     }
 }

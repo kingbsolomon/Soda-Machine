@@ -4,7 +4,13 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class Dime
+    class Dime:Coin
     {
+        
+        public Dime()
+        {
+            value = 0.10;
+            name = "Dime";
+        }
     }
 }
