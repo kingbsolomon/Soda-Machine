@@ -42,15 +42,15 @@ namespace SodaMachine
 
         private void InitInventory()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 inventory.Add(new RootBeer());
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 inventory.Add(new Cola());
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 inventory.Add(new OrangeSoda());
             }
