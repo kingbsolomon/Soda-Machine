@@ -6,5 +6,14 @@ namespace SodaMachine
 {
     class Wallet
     {
+        public List<Coin> WalletMoney;
+        public Card Card;
+
+        public Wallet()
+        {
+            WalletMoney = new List<Coin>();
+            Card = new Card();
+
+        }
     }
 }

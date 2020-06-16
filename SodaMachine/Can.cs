@@ -8,8 +8,9 @@ namespace SodaMachine
     {
         // member variables
 
-        double Cost;
-        string name;
+        protected double cost;
+        public double Cost { set; get; }
+        protected string name;
 
     }
 }

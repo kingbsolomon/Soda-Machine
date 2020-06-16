@@ -8,7 +8,8 @@ namespace SodaMachine
     {
         public RootBeer()
         {
-
+            cost = 0.60;
+            name = "Root Beer";
         }
     }
 }
