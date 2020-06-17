@@ -8,6 +8,6 @@ namespace SodaMachine
     {
         protected double value;
         public double Value { set; get; }
-        protected string name;
+        public string name;
     }
 }

@@ -10,7 +10,8 @@ namespace SodaMachine
         public List<Coin> register;
         public List<Can> inventory;
 
-        private List<Coin> tempRegister;
+        public List<Coin> tempRegister;
+        public  double tempMoneyTotal;
         public SodaMachine()
         {
             register = new List<Coin>();
@@ -75,6 +76,8 @@ namespace SodaMachine
             }
             return inInventory;
         }
+
+       
 
 
     }

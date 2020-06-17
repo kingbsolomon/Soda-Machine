@@ -6,13 +6,13 @@ namespace SodaMachine
 {
     class Wallet
     {
-        public List<Coin> WalletMoney;
-        public Card Card;
+        public List<Coin> walletMoney;
+        public Card card;
 
         public Wallet()
         {
-            WalletMoney = new List<Coin>();
-            Card = new Card();
+            walletMoney = new List<Coin>();
+            card = new Card();
             InitWallet();
         }
 
@@ -20,21 +20,24 @@ namespace SodaMachine
         {
             for(int i = 0; i < 12; i++)
             {
-                WalletMoney.Add(new Quarter());
+                walletMoney.Add(new Quarter());
+                
             }
             for (int i = 0; i < 10; i++)
             {
-                WalletMoney.Add(new Dime());
+                walletMoney.Add(new Dime());
             }
             for (int i = 0; i < 10; i++)
             {
-                WalletMoney.Add(new Nickle());
+                walletMoney.Add(new Nickle());
             }
             for (int i = 0; i < 50; i++)
             {
-                WalletMoney.Add(new Penny());
+                walletMoney.Add(new Penny());
             }
         }
+
+        
 
     }
 }

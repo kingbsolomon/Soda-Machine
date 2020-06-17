@@ -6,7 +6,7 @@ namespace SodaMachine
     {
         static void Main(string[] args)
         {
-            SodaMachine mySodaMachine = new SodaMachine();
+            Simulation simulation = new Simulation();
         }
     }
 }
