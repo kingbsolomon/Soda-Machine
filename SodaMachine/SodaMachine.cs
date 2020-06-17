@@ -60,14 +60,15 @@ namespace SodaMachine
             }
         }
 
-        public bool InInventory(Can can)
+        public bool InInventory(string soda)
         {
             bool inInventory = false;
             for(int i= 0; i < inventory.Count; i++)
             {
-                if (inventory[i].name == can.name)
+                if (inventory[i].name == soda)
                 {
                     inInventory = true;
+                    break;
                 }
                 else
                 {
@@ -77,7 +78,17 @@ namespace SodaMachine
             return inInventory;
         }
 
-       
+        public double MoneyInTempRegister()
+        {
+            tempMoneyTotal = 0;
+            for (int i = 0; i < tempRegister.Count; i++)
+            {
+                tempMoneyTotal += tempRegister[i].Value;
+            }
+
+            return tempMoneyTotal;
+        }
+
 
 
     }

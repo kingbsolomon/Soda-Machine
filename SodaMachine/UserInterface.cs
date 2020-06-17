@@ -16,10 +16,6 @@ namespace SodaMachine
         public static void WhatCoinsInMachine()
         {
             Console.WriteLine("Please Insert Coins into the Soda Machine");
-            InsertQuarters();
-            InsertDimes();
-            InsertNickles();
-            InsertPennies();
         }
 
         public static int InsertQuarters()
@@ -62,7 +58,7 @@ namespace SodaMachine
         public static string ChooseSodaMenu()
         {
             Console.WriteLine("Please select which type of Soda you would like:");
-            Console.WriteLine("1: Root Beer\t2: Orange Soda\t3: Cola");
+            Console.Write("1: Root Beer\t2: Orange Soda\t3: Cola  ");
             string sodaSelection = Console.ReadLine();
             return sodaSelection;
         }

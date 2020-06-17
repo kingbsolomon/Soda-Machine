@@ -14,9 +14,35 @@ namespace SodaMachine
         {
             sodaMachine = new SodaMachine();
             customer = new Customer();
-            UserInterface.Welcome()
+            UserInterface.Welcome();
             //UserInterface.
         }
+
+
+
+
+
+
+
+
+
+        public void SodaSelection()
+        {
+            bool sodaSelection = false;
+
+            string sodaChoice = UserInterface.ChooseSodaMenu();
+            while (!sodaSelection) 
+            {
+           
+                switch (sodaChoice)
+                {
+                    case "1":
+
+
+                }
+            }
+        }
+
 
         public void InitTempRegister()
         {
@@ -25,10 +51,9 @@ namespace SodaMachine
             AddDimesToTempRegister(UserInterface.InsertDimes());
             AddNicklesToTempRegister(UserInterface.InsertNickles());
             AddPenniesToTempRegister(UserInterface.InsertPennies());
-
         }
-   
 
+        
         public void AddQuartersToTempRegister(int quarters)
         {
             for (int i = 0; i < quarters; i++)
@@ -42,7 +67,6 @@ namespace SodaMachine
                         break;
                     }
                 }
-                
             }
         }
         public void AddDimesToTempRegister(int dimes)
@@ -58,7 +82,6 @@ namespace SodaMachine
                         break;
                     }
                 }
-
             }
         }
         public void AddNicklesToTempRegister(int nickles)
@@ -74,7 +97,6 @@ namespace SodaMachine
                         break;
                     }
                 }
-
             }
         }
         public void AddPenniesToTempRegister(int pennies)
@@ -90,7 +112,6 @@ namespace SodaMachine
                         break;
                     }
                 }
-
             }
         }
 

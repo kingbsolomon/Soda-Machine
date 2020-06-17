@@ -9,7 +9,7 @@ namespace SodaMachine
         // member variables
 
         protected double cost;
-        public double Cost { set; get; }
+        public double Cost { set=>cost=value; get=>cost; }
         public string name;
 
     }
