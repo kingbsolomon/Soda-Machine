@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SodaMachine
@@ -8,6 +9,8 @@ namespace SodaMachine
     {
         public List<Coin> register;
         public List<Can> inventory;
+
+        private List<Coin> tempRegister;
         public SodaMachine()
         {
             register = new List<Coin>();
@@ -55,5 +58,24 @@ namespace SodaMachine
                 inventory.Add(new OrangeSoda());
             }
         }
+
+        public bool InInventory(Can can)
+        {
+            bool inInventory = false;
+            for(int i= 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].name == can.name)
+                {
+                    inInventory = true;
+                }
+                else
+                {
+                    inInventory = false;
+                }
+            }
+            return inInventory;
+        }
+
+
     }
 }

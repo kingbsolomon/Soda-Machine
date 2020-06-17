@@ -13,6 +13,7 @@ namespace SodaMachine
         {
             sodaMachine = new SodaMachine();
             customer = new Customer();
+            UserInterface.Welcome();
         }
     }
 }

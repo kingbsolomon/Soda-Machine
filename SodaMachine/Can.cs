@@ -10,7 +10,7 @@ namespace SodaMachine
 
         protected double cost;
         public double Cost { set; get; }
-        protected string name;
+        public string name;
 
     }
 }
