@@ -20,7 +20,7 @@ namespace SodaMachine
             InitRegister();
             InitInventory();
         }
-
+ 
         private void InitRegister()
         {
             for (int i = 0; i < 20; i++)
@@ -43,7 +43,6 @@ namespace SodaMachine
                 register.Add(new Penny());
             }
         }
-
         private void InitInventory()
         {
             for (int i = 0; i < 20; i++)
@@ -59,15 +58,15 @@ namespace SodaMachine
                 inventory.Add(new OrangeSoda());
             }
         }
-
-        public bool InInventory(string soda)
+        public bool InInventory(string name)
         {
             bool inInventory = false;
             for(int i= 0; i < inventory.Count; i++)
             {
-                if (inventory[i].name == soda)
+                if (inventory[i].name == name)
                 {
                     inInventory = true;
+                    tempRegister = new List<Coin>();
                     break;
                 }
                 else
@@ -77,7 +76,6 @@ namespace SodaMachine
             }
             return inInventory;
         }
-
         public double MoneyInTempRegister()
         {
             tempMoneyTotal = 0;
@@ -85,9 +83,10 @@ namespace SodaMachine
             {
                 tempMoneyTotal += tempRegister[i].Value;
             }
-
             return tempMoneyTotal;
         }
+
+        // 
 
 
 

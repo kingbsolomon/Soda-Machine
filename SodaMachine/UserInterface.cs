@@ -12,6 +12,12 @@ namespace SodaMachine
             Console.WriteLine("Welcome to the Soda Machine");
             Console.WriteLine("I am here to cure your thirst needs!");
         }
+
+        public static void NotInInventory()
+        {
+            Console.WriteLine("This is no longer in the inventory. Please make another selection.");
+            //ChooseSodaMenu();
+        }
         
         public static void WhatCoinsInMachine()
         {
@@ -58,7 +64,7 @@ namespace SodaMachine
         public static string ChooseSodaMenu()
         {
             Console.WriteLine("Please select which type of Soda you would like:");
-            Console.Write("1: Root Beer\t2: Orange Soda\t3: Cola  ");
+            Console.Write("1: Root Beer 60¢\n2: Orange Soda 35¢\n3: Cola 6¢  ");
             string sodaSelection = Console.ReadLine();
             return sodaSelection;
         }

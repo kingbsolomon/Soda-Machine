@@ -15,32 +15,76 @@ namespace SodaMachine
             sodaMachine = new SodaMachine();
             customer = new Customer();
             UserInterface.Welcome();
-            //UserInterface.
+            SodaMachineLoop();
+            
+            
+            
+
+
+
+
+        }
+
+        public void SodaMachineLoop()
+        {
+            bool sodaMachineContinue = true;
+            bool inSodaMachineInventory = false;
+
+            while (sodaMachineContinue)
+            {
+                UserInterface.ChoosePayment();
+               
+                while (!inSodaMachineInventory) 
+                { 
+                string sodaChoice = SodaSelection();
+                inSodaMachineInventory = sodaMachine.InInventory(sodaChoice);
+                }
+
+                InitTempRegister();
+
+            }
+        }
+
+
+
+        public void CheckInventory(bool inventory)
+        {
+            
         }
 
 
 
 
-
-
-
-
-
-        public void SodaSelection()
+        public string SodaSelection()
         {
             bool sodaSelection = false;
+            string sodaName = "";
 
             string sodaChoice = UserInterface.ChooseSodaMenu();
-            while (!sodaSelection) 
+
+            while (sodaSelection == false) 
             {
-           
                 switch (sodaChoice)
                 {
                     case "1":
-
-
+                        sodaName = "Root Beer";
+                        sodaSelection = true;
+                        break;
+                    case "2":
+                        sodaName = "Orange Soda";
+                        sodaSelection = true;
+                        break;
+                    case "3":
+                        sodaName = "Cola";
+                        sodaSelection = true;
+                        break;
+                    default:
+                        Console.WriteLine("Please make a valid selection");
+                        sodaSelection = false;
+                        break;
                 }
             }
+            return sodaName;
         }
 
 
