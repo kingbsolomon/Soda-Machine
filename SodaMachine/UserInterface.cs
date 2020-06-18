@@ -24,6 +24,7 @@ namespace SodaMachine
             Console.WriteLine("Please Insert Coins into the Soda Machine");
         }
 
+
         public static int InsertQuarters()
         {
             Console.Write("How many Quarters would you like to insert? ");
@@ -67,7 +68,14 @@ namespace SodaMachine
             Console.Write("1: Root Beer 60¢\n2: Orange Soda 35¢\n3: Cola 6¢  ");
             string sodaSelection = Console.ReadLine();
             return sodaSelection;
+
         }
+
+        public static void MoneyPrintOut(double money)
+        {
+            Console.WriteLine("You have inserted ${0} into the machine", money);
+        }
+
 
     }
 }

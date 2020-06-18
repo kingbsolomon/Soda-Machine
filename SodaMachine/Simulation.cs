@@ -29,27 +29,31 @@ namespace SodaMachine
         {
             bool sodaMachineContinue = true;
             bool inSodaMachineInventory = false;
+            double moneyPrintOut;
 
             while (sodaMachineContinue)
             {
                 UserInterface.ChoosePayment();
-               
+                InitTempRegister();
+                moneyPrintOut = sodaMachine.MoneyInTempRegister();
+                UserInterface.MoneyPrintOut(moneyPrintOut); //you have inserted $x.xx into soda machine
+
                 while (!inSodaMachineInventory) 
                 { 
                 string sodaChoice = SodaSelection();
                 inSodaMachineInventory = sodaMachine.InInventory(sodaChoice);
                 }
-
-                InitTempRegister();
+                
+                
 
             }
         }
 
 
 
-        public void CheckInventory(bool inventory)
+       public void MoveToBackPack()
         {
-            
+
         }
 
 
@@ -57,44 +61,40 @@ namespace SodaMachine
 
         public string SodaSelection()
         {
-            bool sodaSelection = false;
+            
             string sodaName = "";
 
             string sodaChoice = UserInterface.ChooseSodaMenu();
 
-            while (sodaSelection == false) 
-            {
                 switch (sodaChoice)
                 {
                     case "1":
                         sodaName = "Root Beer";
-                        sodaSelection = true;
                         break;
                     case "2":
                         sodaName = "Orange Soda";
-                        sodaSelection = true;
                         break;
                     case "3":
                         sodaName = "Cola";
-                        sodaSelection = true;
                         break;
                     default:
                         Console.WriteLine("Please make a valid selection");
-                        sodaSelection = false;
+                        SodaSelection();
                         break;
                 }
-            }
             return sodaName;
         }
 
 
         public void InitTempRegister()
         {
+            sodaMachine.tempRegister = new List<Coin>();
             UserInterface.WhatCoinsInMachine();
             AddQuartersToTempRegister(UserInterface.InsertQuarters());
             AddDimesToTempRegister(UserInterface.InsertDimes());
             AddNicklesToTempRegister(UserInterface.InsertNickles());
             AddPenniesToTempRegister(UserInterface.InsertPennies());
+            Console.Clear();
         }
 
         

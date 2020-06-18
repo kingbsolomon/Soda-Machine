@@ -53,26 +53,31 @@ namespace SodaMachine
             {
                 inventory.Add(new Cola());
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 0; i++)
             {
                 inventory.Add(new OrangeSoda());
             }
         }
         public bool InInventory(string name)
         {
-            bool inInventory = false;
+            bool inInventory = true;
+
             for(int i= 0; i < inventory.Count; i++)
             {
                 if (inventory[i].name == name)
                 {
                     inInventory = true;
-                    tempRegister = new List<Coin>();
                     break;
                 }
                 else
                 {
                     inInventory = false;
                 }
+            }
+
+            if (!inInventory)
+            {
+                UserInterface.NotInInventory();
             }
             return inInventory;
         }
