@@ -54,7 +54,7 @@ namespace SodaMachine
         public static string ChooseSodaMenu()
         {
             Console.WriteLine("Please select which type of Soda you would like:");
-            Console.Write("1: Root Beer 60¢\n2: Orange Soda 35¢\n3: Cola 6¢  ");
+            Console.Write("1: Root Beer 60¢\n2: Cola 35¢\n3: Orange Soda 6¢  ");
             string sodaSelection = Console.ReadLine();
             return sodaSelection;
 
@@ -71,6 +71,13 @@ namespace SodaMachine
         public static void ChangeAmount(double change)
         {
             Console.WriteLine("Your Change Amount is: ${0}", change);
+        }
+
+        public static string AnotherPurchase()
+        {
+            Console.WriteLine("Would you like to make another purchase? y or n :");
+            string anotherPurchase = Console.ReadLine();
+            return anotherPurchase;
         }
 
     }
