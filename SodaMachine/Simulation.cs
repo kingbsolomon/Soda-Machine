@@ -43,21 +43,31 @@ namespace SodaMachine
                 string sodaChoice = SodaSelection();
                 inSodaMachineInventory = sodaMachine.InInventory(sodaChoice);
                 }
-                
-                
+            }
+        }
+        public void CheckEnoughMoney()
+        {
+            if (sodaMachine.tempMoneyTotal >= sodaMachine.tempCan.Cost)
+            {
+                customer.backpack.MyCans.Add(sodaMachine.tempCan);
+                sodaMachine.inventory.Remove(sodaMachine.tempCan);
+            }
+            else
+            {
+                UserInterface.InsufficientFunds();
+                ReturnMoney();
 
             }
         }
 
-
-
-       public void MoveToBackPack()
+        public void ReturnMoney()
         {
-
+            for (int i = 0; i < sodaMachine.tempRegister.Count; i++)
+            {
+                customer.wallet.walletMoney.Add(sodaMachine.tempRegister[i]);
+                sodaMachine.tempRegister.RemoveAt(i);
+            }
         }
-
-
-
 
         public string SodaSelection()
         {
@@ -84,6 +94,8 @@ namespace SodaMachine
                 }
             return sodaName;
         }
+
+       
 
 
         public void InitTempRegister()
@@ -158,10 +170,5 @@ namespace SodaMachine
                 }
             }
         }
-
-
-
-
-
     }
 }

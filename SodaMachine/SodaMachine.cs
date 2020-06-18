@@ -12,6 +12,7 @@ namespace SodaMachine
 
         public List<Coin> tempRegister;
         public  double tempMoneyTotal;
+        public Can tempCan;
         public SodaMachine()
         {
             register = new List<Coin>();
@@ -67,6 +68,7 @@ namespace SodaMachine
                 if (inventory[i].name == name)
                 {
                     inInventory = true;
+                    tempCan = inventory[i];
                     break;
                 }
                 else
@@ -81,6 +83,8 @@ namespace SodaMachine
             }
             return inInventory;
         }
+
+        
         public double MoneyInTempRegister()
         {
             tempMoneyTotal = 0;
@@ -91,7 +95,17 @@ namespace SodaMachine
             return tempMoneyTotal;
         }
 
-        // 
+        
+
+        public void GiveChange()
+        {
+            double change = tempMoneyTotal - tempCan.Cost;
+
+            while (change >= 0.25)
+            {
+
+            }
+        }
 
 
 

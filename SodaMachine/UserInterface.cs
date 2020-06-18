@@ -16,7 +16,6 @@ namespace SodaMachine
         public static void NotInInventory()
         {
             Console.WriteLine("This is no longer in the inventory. Please make another selection.");
-            //ChooseSodaMenu();
         }
         
         public static void WhatCoinsInMachine()
@@ -74,6 +73,12 @@ namespace SodaMachine
         public static void MoneyPrintOut(double money)
         {
             Console.WriteLine("You have inserted ${0} into the machine", money);
+        }
+
+        public static void InsufficientFunds()
+        {
+            Console.WriteLine("You have not inserted enough money for this purchase.");
+            Console.WriteLine("Refunding Money...");
         }
 
 
