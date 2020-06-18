@@ -4,14 +4,14 @@ using System.Text;
 
 namespace SodaMachine
 {
-    class Card
+    public class Card
     {
-        private double availableFunds;
-        public double AvailableFunds { set; get; }
+        protected double availableFunds;
+        public double AvailableFunds { set=>availableFunds=value; get=>availableFunds; }
 
         public Card()
         {
-
+            AvailableFunds = 20.00;
         }
     }
 }

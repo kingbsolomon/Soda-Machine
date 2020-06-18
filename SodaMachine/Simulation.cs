@@ -11,29 +11,61 @@ namespace SodaMachine
         public SodaMachine sodaMachine;
         public Customer customer;
         bool sodaMachineContinue = true;
+        bool inSodaMachineInventory = false;
 
         public Simulation()
         {
             sodaMachine = new SodaMachine();
             customer = new Customer();
             UserInterface.Welcome();
-            while (sodaMachineContinue)
-            {
-                SodaMachineLoop();
-                MakeAnotherPurchase();
-            }
-            
-        }
+            string paymentChoice = UserInterface.ChoosePayment();
 
-        public void SodaMachineLoop()
+            switch (paymentChoice) 
+            {
+                case "1":
+                    while (sodaMachineContinue)
+                    {
+                        CoinSodaMachineLoop();
+                        MakeAnotherPurchase();
+                    }
+                    break;
+
+                case "2":
+                    while (sodaMachineContinue)
+                    {
+                        CardSodaMachineLoop();
+                        MakeAnotherPurchase();
+                    }
+                    break;
+                default:
+                    paymentChoice = UserInterface.ChoosePayment();
+                    break;
+            }
+
+           
+        }
+        public void CardSodaMachineLoop()
+        {
+
+            UserInterface.CardBalance(customer.wallet.card);
+            
+
+            while (!inSodaMachineInventory)
+            {
+                string sodaChoice = SodaSelection();
+                inSodaMachineInventory = sodaMachine.InInventory(sodaChoice);
+            }
+            CheckEnoughMoneyCard();
+
+        }
+        public void CoinSodaMachineLoop()
         {
             bool inSodaMachineInventory = false;
             double moneyPrintOut;
 
-            UserInterface.ChoosePayment();
             InitTempRegister();
             moneyPrintOut = sodaMachine.MoneyInTempRegister();
-            UserInterface.MoneyPrintOut(moneyPrintOut); //you have inserted $x.xx into soda machine
+            UserInterface.MoneyPrintOut(Math.Round(moneyPrintOut,2)); 
 
             while (!inSodaMachineInventory) 
             { 
@@ -42,9 +74,10 @@ namespace SodaMachine
             }
             CheckEnoughMoney();
         }
+
         public bool MakeAnotherPurchase()
         {
-            string anotherPurchase = UserInterface.AnotherPurchase();
+            string anotherPurchase = UserInterface.AnotherPurchase().ToLower();
             switch (anotherPurchase)
             {
                 case "y":
@@ -61,21 +94,35 @@ namespace SodaMachine
         }
         public void CheckEnoughMoney()
         {
-            if (sodaMachine.tempMoneyTotal >= sodaMachine.tempCan.Cost)
+            bool changeCheck = CheckChangeAvailable();
+
+            if ((sodaMachine.tempMoneyTotal >= sodaMachine.tempCan.Cost) || changeCheck)
             {
                 customer.backpack.MyCans.Add(sodaMachine.tempCan);
                 sodaMachine.inventory.Remove(sodaMachine.tempCan);
                 AddMoneyToSodaMachine();
                 GiveChange();
             }
-            else
+            else if((sodaMachine.tempMoneyTotal < sodaMachine.tempCan.Cost) || !changeCheck)
             {
                 UserInterface.InsufficientFunds();
                 ReturnMoney();
-                //SodaMachineLoop();
             }
         }
-
+        public void CheckEnoughMoneyCard()
+        {
+            if (customer.wallet.card.AvailableFunds >= sodaMachine.tempCan.Cost)
+            {
+                customer.backpack.MyCans.Add(sodaMachine.tempCan);
+                sodaMachine.inventory.Remove(sodaMachine.tempCan);
+                customer.wallet.card.AvailableFunds -= sodaMachine.tempCan.Cost;
+                sodaMachine.electronicRegister += sodaMachine.tempCan.Cost;
+            }
+            else if (customer.wallet.card.AvailableFunds < sodaMachine.tempCan.Cost)
+            {
+                UserInterface.InsufficientFunds();
+            }
+        }
         public void ReturnMoney()
         {
             int tempRegisterCount = sodaMachine.tempRegister.Count;
@@ -86,6 +133,7 @@ namespace SodaMachine
             }
         }
 
+
         public void AddMoneyToSodaMachine()
         {
             int tempRegisterCount = sodaMachine.tempRegister.Count;
@@ -95,7 +143,6 @@ namespace SodaMachine
                 sodaMachine.tempRegister.RemoveAt(0);
             }
         }
-
         public void GiveChange()
         {
             double change = sodaMachine.tempMoneyTotal - sodaMachine.tempCan.Cost;
@@ -103,25 +150,91 @@ namespace SodaMachine
 
             while (change >= 0.25)
             {
-                change -= 0.25;
-                AddQuarterChangeToWallet();
+                if (customer.wallet.walletMoney.Where(c => c.name == "Quarter").ToList().Count > 0)
+                { 
+                    change -= 0.25;
+                    AddQuarterChangeToWallet();
+                }
             }
+
             while (change >= 0.10)
             {
-                change -= 0.10;
-                AddDimeChangeToWallet();
+                if (customer.wallet.walletMoney.Where(c => c.name == "Dime").ToList().Count > 0)
+                {
+                    change -= 0.10;
+                    AddDimeChangeToWallet();
+                }
             }
+
             while (change >= 0.05)
             {
-                change -= 0.05;
-                AddNickleChangeToWallet();
+                if (customer.wallet.walletMoney.Where(c => c.name == "Nickle").ToList().Count > 0)
+                {
+                    change -= 0.05;
+                    AddNickleChangeToWallet();
+                }
             }
+
             while (change >= 0.01)
             {
-                change -= 0.01;
-                AddPennyChangeToWallet();
+                if (customer.wallet.walletMoney.Where(c => c.name == "Penny").ToList().Count > 0)
+                {
+                    change -= 0.01;
+                    AddPennyChangeToWallet();
+                }
             }
         }
+
+        public bool CheckChangeAvailable()
+        {
+            double change = sodaMachine.tempMoneyTotal - sodaMachine.tempCan.Cost;
+            while (change >= 0.25)
+            {
+                if (customer.wallet.walletMoney.Where(c => c.name == "Quarter").ToList().Count > 0)
+                {
+                    change -= 0.25;
+                    AddQuarterChangeToWallet();
+                }
+            }
+
+            while (change >= 0.10)
+            {
+                if (customer.wallet.walletMoney.Where(c => c.name == "Dime").ToList().Count > 0)
+                {
+                    change -= 0.10;
+                    AddDimeChangeToWallet();
+                }
+            }
+
+            while (change >= 0.05)
+            {
+                if (customer.wallet.walletMoney.Where(c => c.name == "Nickle").ToList().Count > 0)
+                {
+                    change -= 0.05;
+                    AddNickleChangeToWallet();
+                }
+            }
+
+            while (change >= 0.01)
+            {
+                if (customer.wallet.walletMoney.Where(c => c.name == "Penny").ToList().Count > 0)
+                {
+                    change -= 0.01;
+                    AddPennyChangeToWallet();
+                }
+            }
+
+            if(change == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+    
         public string SodaSelection()
         {
             string sodaName = "";
@@ -140,7 +253,7 @@ namespace SodaMachine
                         sodaName = "Orange Soda";
                         break;
                     default:
-                        Console.WriteLine("Please make a valid selection");
+                        UserInterface.ValidSelection();
                         SodaSelection();
                         break;
                 }
@@ -159,70 +272,79 @@ namespace SodaMachine
         public void AddQuartersToTempRegister(int quarters)
         {
             int amountOfQuarters = customer.wallet.walletMoney.Where(c => c.name == "Quarter").ToList().Count;
-            
-            int quarterCounter = 0;
-            foreach(Coin coin in customer.wallet.walletMoney)
-            {
-                if(coin.name == "Quarter")
-                {
-                    quarterCounter++;
-                }
-            }
 
-            for (int i = 0; i < quarters; i++)
-            {
-                for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
+            if (amountOfQuarters >= quarters)
+            { 
+                for (int i = 0; i < quarters; i++)
                 {
-                    if (customer.wallet.walletMoney[j].name == "Quarter")
+                    for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
                     {
-                        sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
-                        customer.wallet.walletMoney.RemoveAt(j);
-                        break;
+                        if (customer.wallet.walletMoney[j].name == "Quarter")
+                        {
+                            sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
+                            customer.wallet.walletMoney.RemoveAt(j);
+                            break;
+                        }
                     }
                 }
             }
         }
         public void AddDimesToTempRegister(int dimes)
         {
-            for (int i = 0; i < dimes; i++)
+            int amountOfDimes = customer.wallet.walletMoney.Where(c => c.name == "Dime").ToList().Count;
+
+            if (amountOfDimes >= dimes)
             {
-                for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
+                for (int i = 0; i < dimes; i++)
                 {
-                    if (customer.wallet.walletMoney[j].name == "Dime")
+                    for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
                     {
-                        sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
-                        customer.wallet.walletMoney.RemoveAt(j);
-                        break;
+                        if (customer.wallet.walletMoney[j].name == "Dime")
+                        {
+                            sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
+                            customer.wallet.walletMoney.RemoveAt(j);
+                            break;
+                        }
                     }
                 }
             }
         }
         public void AddNicklesToTempRegister(int nickles)
         {
-            for (int i = 0; i < nickles; i++)
+            int amountOfNickles = customer.wallet.walletMoney.Where(c => c.name == "Nickle").ToList().Count;
+
+            if (amountOfNickles >= nickles)
             {
-                for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
+                for (int i = 0; i < nickles; i++)
                 {
-                    if (customer.wallet.walletMoney[j].name == "Nickle")
+                    for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
                     {
-                        sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
-                        customer.wallet.walletMoney.RemoveAt(j);
-                        break;
+                        if (customer.wallet.walletMoney[j].name == "Nickle")
+                        {
+                            sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
+                            customer.wallet.walletMoney.RemoveAt(j);
+                            break;
+                        }
                     }
                 }
             }
         }
         public void AddPenniesToTempRegister(int pennies)
         {
-            for (int i = 0; i < pennies; i++)
+            int amountOfPennies = customer.wallet.walletMoney.Where(c => c.name == "Penny").ToList().Count;
+
+            if (amountOfPennies >= pennies)
             {
-                for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
+                for (int i = 0; i < pennies; i++)
                 {
-                    if (customer.wallet.walletMoney[j].name == "Penny")
+                    for (int j = 0; j < customer.wallet.walletMoney.Count; j++)
                     {
-                        sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
-                        customer.wallet.walletMoney.RemoveAt(j);
-                        break;
+                        if (customer.wallet.walletMoney[j].name == "Penny")
+                        {
+                            sodaMachine.tempRegister.Add(customer.wallet.walletMoney[j]);
+                            customer.wallet.walletMoney.RemoveAt(j);
+                            break;
+                        }
                     }
                 }
             }
@@ -277,3 +399,13 @@ namespace SodaMachine
         }
     }
 }
+//customer.wallet.walletMoney.Where(c => c.name == "Quarter").ToList().Count;
+
+/*int quarterCounter = 0;
+foreach(Coin coin in customer.wallet.walletMoney)
+{
+    if(coin.name == "Quarter")
+    {
+        quarterCounter++;
+    }
+}*/

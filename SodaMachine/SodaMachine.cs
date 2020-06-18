@@ -9,6 +9,7 @@ namespace SodaMachine
     {
         public List<Coin> register;
         public List<Can> inventory;
+        public double electronicRegister;
 
         public List<Coin> tempRegister;
         public  double tempMoneyTotal;
@@ -87,7 +88,7 @@ namespace SodaMachine
         
         public double MoneyInTempRegister()
         {
-            tempMoneyTotal = 0;
+            tempMoneyTotal = 0.0;
             for (int i = 0; i < tempRegister.Count; i++)
             {
                 tempMoneyTotal += tempRegister[i].Value;
@@ -99,7 +100,7 @@ namespace SodaMachine
 
        
 
-
+        
 
     }
 }

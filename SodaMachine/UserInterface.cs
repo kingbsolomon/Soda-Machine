@@ -70,14 +70,22 @@ namespace SodaMachine
         }
         public static void ChangeAmount(double change)
         {
-            Console.WriteLine("Your Change Amount is: ${0}", change);
+            Console.WriteLine("Your Change Amount is: ${0}", Math.Round(change,2));
         }
 
         public static string AnotherPurchase()
         {
-            Console.WriteLine("Would you like to make another purchase? y or n :");
+            Console.WriteLine("Would you like to make another purchase? y or n ");
             string anotherPurchase = Console.ReadLine();
             return anotherPurchase;
+        }
+        public static void CardBalance(Card card)
+        {
+            Console.WriteLine("Your Card Balance is: {0}", card.AvailableFunds);
+        }
+        public static void ValidSelection()
+        {
+            Console.WriteLine("Please Enter A Valid Selection");
         }
 
     }
