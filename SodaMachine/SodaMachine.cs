@@ -97,15 +97,7 @@ namespace SodaMachine
 
         
 
-        public void GiveChange()
-        {
-            double change = tempMoneyTotal - tempCan.Cost;
-
-            while (change >= 0.25)
-            {
-
-            }
-        }
+       
 
 
 

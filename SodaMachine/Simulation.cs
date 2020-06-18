@@ -51,12 +51,12 @@ namespace SodaMachine
             {
                 customer.backpack.MyCans.Add(sodaMachine.tempCan);
                 sodaMachine.inventory.Remove(sodaMachine.tempCan);
+                AddMoneyToSodaMachine();
             }
             else
             {
                 UserInterface.InsufficientFunds();
                 ReturnMoney();
-
             }
         }
 
@@ -69,9 +69,38 @@ namespace SodaMachine
             }
         }
 
+        public void AddMoneyToSodaMachine()
+        {
+            for (int i = 0; i < sodaMachine.tempRegister.Count; i++)
+            {
+                sodaMachine.register.Add(sodaMachine.tempRegister[i]);
+                sodaMachine.tempRegister.RemoveAt(i);
+            }
+        }
+
+        public void GiveChange()
+        {
+            double change = sodaMachine.tempMoneyTotal - sodaMachine.tempCan.Cost;
+            UserInterface.ChangeAmount(change);
+
+            while (change >= 0.25)
+            {
+                change -= 0.25;
+                AddQuarterChangeToWallet();
+            }
+            while (change >= 0.10)
+            {
+                change -= 0.10;
+                AddDimeChangeToWallet();
+            }
+            while(change >= 0.05)
+            {
+                change -= 0.05;
+                AddNickleChangeToWallet();
+            }
+        }
         public string SodaSelection()
         {
-            
             string sodaName = "";
 
             string sodaChoice = UserInterface.ChooseSodaMenu();
@@ -94,10 +123,6 @@ namespace SodaMachine
                 }
             return sodaName;
         }
-
-       
-
-
         public void InitTempRegister()
         {
             sodaMachine.tempRegister = new List<Coin>();
@@ -108,8 +133,6 @@ namespace SodaMachine
             AddPenniesToTempRegister(UserInterface.InsertPennies());
             Console.Clear();
         }
-
-        
         public void AddQuartersToTempRegister(int quarters)
         {
             for (int i = 0; i < quarters; i++)
@@ -167,6 +190,54 @@ namespace SodaMachine
                         customer.wallet.walletMoney.RemoveAt(j);
                         break;
                     }
+                }
+            }
+        }
+        public void AddQuarterChangeToWallet()
+        {
+                for (int i = 0; i < sodaMachine.register.Count; i++)
+                {
+                    if (sodaMachine.register[i].name == "Quarter")
+                    {
+                        customer.wallet.walletMoney.Add(sodaMachine.register[i]);
+                        sodaMachine.register.RemoveAt(i);
+                        break;
+                    }
+                }
+        }
+        public void AddDimeChangeToWallet()
+        {
+            for (int i = 0; i < sodaMachine.register.Count; i++)
+            {
+                if (sodaMachine.register[i].name == "Dime")
+                {
+                    customer.wallet.walletMoney.Add(sodaMachine.register[i]);
+                    sodaMachine.register.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+        public void AddNickleChangeToWallet()
+        {
+            for (int i = 0; i < sodaMachine.register.Count; i++)
+            {
+                if (sodaMachine.register[i].name == "Nickle")
+                {
+                    customer.wallet.walletMoney.Add(sodaMachine.register[i]);
+                    sodaMachine.register.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+        public void AddPennyChangeToWallet()
+        {
+            for (int i = 0; i < sodaMachine.register.Count; i++)
+            {
+                if (sodaMachine.register[i].name == "Penny")
+                {
+                    customer.wallet.walletMoney.Add(sodaMachine.register[i]);
+                    sodaMachine.register.RemoveAt(i);
+                    break;
                 }
             }
         }
