@@ -11,7 +11,6 @@ namespace SodaMachine
         public SodaMachine sodaMachine;
         public Customer customer;
         bool sodaMachineContinue = true;
-       
 
         public Simulation()
         {
@@ -20,10 +19,6 @@ namespace SodaMachine
             UserInterface.Welcome();
             string paymentChoice = UserInterface.ChoosePayment();
             PaymentChoice(paymentChoice);
-
-            
-
-           
         }
         public void PaymentChoice(string paymentChoice)
         {
@@ -79,7 +74,6 @@ namespace SodaMachine
             }
             CheckEnoughMoney();
         }
-
         public bool MakeAnotherPurchase()
         {
             string anotherPurchase = UserInterface.AnotherPurchase().ToLower();
@@ -137,8 +131,6 @@ namespace SodaMachine
                 sodaMachine.tempRegister.RemoveAt(0);
             }
         }
-
-
         public void AddMoneyToSodaMachine()
         {
             int tempRegisterCount = sodaMachine.tempRegister.Count;
@@ -161,7 +153,6 @@ namespace SodaMachine
                     AddQuarterChangeToWallet();
                 }
             }
-
             while (change >= 0.10)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Dime").ToList().Count > 0)
@@ -170,7 +161,6 @@ namespace SodaMachine
                     AddDimeChangeToWallet();
                 }
             }
-
             while (change >= 0.05)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Nickle").ToList().Count > 0)
@@ -179,7 +169,6 @@ namespace SodaMachine
                     AddNickleChangeToWallet();
                 }
             }
-
             while (change >= 0.01)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Penny").ToList().Count > 0)
@@ -200,7 +189,6 @@ namespace SodaMachine
                     AddQuarterChangeToWallet();
                 }
             }
-
             while (change >= 0.10)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Dime").ToList().Count > 0)
@@ -209,7 +197,6 @@ namespace SodaMachine
                     AddDimeChangeToWallet();
                 }
             }
-
             while (change >= 0.05)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Nickle").ToList().Count > 0)
@@ -218,7 +205,6 @@ namespace SodaMachine
                     AddNickleChangeToWallet();
                 }
             }
-
             while (change >= 0.01)
             {
                 if (customer.wallet.walletMoney.Where(c => c.name == "Penny").ToList().Count > 0)
@@ -227,7 +213,6 @@ namespace SodaMachine
                     AddPennyChangeToWallet();
                 }
             }
-
             if(change == 0)
             {
                 return true;
@@ -240,7 +225,6 @@ namespace SodaMachine
         public string SodaSelection()
         {
             string sodaName = "";
-
             string sodaChoice = UserInterface.ChooseSodaMenu();
 
                 switch (sodaChoice)

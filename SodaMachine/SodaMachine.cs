@@ -77,7 +77,6 @@ namespace SodaMachine
                     inInventory = false;
                 }
             }
-
             if (!inInventory)
             {
                 UserInterface.NotInInventory();

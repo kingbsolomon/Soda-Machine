@@ -57,7 +57,6 @@ namespace SodaMachine
             Console.Write("1: Root Beer 60¢\n2: Cola 35¢\n3: Orange Soda 6¢  ");
             string sodaSelection = Console.ReadLine();
             return sodaSelection;
-
         }
         public static void MoneyPrintOut(double money)
         {
@@ -87,6 +86,5 @@ namespace SodaMachine
         {
             Console.WriteLine("Please Enter A Valid Selection");
         }
-
     }
 }
