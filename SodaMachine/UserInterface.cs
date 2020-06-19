@@ -81,7 +81,7 @@ namespace SodaMachine
         }
         public static void CardBalance(Card card)
         {
-            Console.WriteLine("Your Card Balance is: {0}", card.AvailableFunds);
+            Console.WriteLine("Your Card Balance is: ${0}", Math.Round(card.AvailableFunds,2));
         }
         public static void ValidSelection()
         {

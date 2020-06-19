@@ -11,7 +11,7 @@ namespace SodaMachine
         public SodaMachine sodaMachine;
         public Customer customer;
         bool sodaMachineContinue = true;
-        bool inSodaMachineInventory = false;
+       
 
         public Simulation()
         {
@@ -19,33 +19,38 @@ namespace SodaMachine
             customer = new Customer();
             UserInterface.Welcome();
             string paymentChoice = UserInterface.ChoosePayment();
+            PaymentChoice(paymentChoice);
 
-            switch (paymentChoice) 
-            {
-                case "1":
-                    while (sodaMachineContinue)
-                    {
-                        CoinSodaMachineLoop();
-                        MakeAnotherPurchase();
-                    }
-                    break;
-
-                case "2":
-                    while (sodaMachineContinue)
-                    {
-                        CardSodaMachineLoop();
-                        MakeAnotherPurchase();
-                    }
-                    break;
-                default:
-                    paymentChoice = UserInterface.ChoosePayment();
-                    break;
-            }
+            
 
            
         }
+        public void PaymentChoice(string paymentChoice)
+        {
+            while (sodaMachineContinue)
+            {
+                switch (paymentChoice)
+                {
+                    case "1":
+                            CoinSodaMachineLoop();
+                            MakeAnotherPurchase();
+                            paymentChoice = UserInterface.ChoosePayment();
+                            break;
+
+                    case "2":
+                            CardSodaMachineLoop();
+                            MakeAnotherPurchase();
+                            paymentChoice = UserInterface.ChoosePayment();
+                            break;
+                    default:
+                        paymentChoice = UserInterface.ChoosePayment();
+                        break;
+                }
+            }
+        }
         public void CardSodaMachineLoop()
         {
+            bool inSodaMachineInventory = false;
 
             UserInterface.CardBalance(customer.wallet.card);
             
@@ -54,9 +59,9 @@ namespace SodaMachine
             {
                 string sodaChoice = SodaSelection();
                 inSodaMachineInventory = sodaMachine.InInventory(sodaChoice);
+                //UserInterface.CardBalance(customer.wallet);
             }
             CheckEnoughMoneyCard();
-
         }
         public void CoinSodaMachineLoop()
         {
@@ -184,7 +189,6 @@ namespace SodaMachine
                 }
             }
         }
-
         public bool CheckChangeAvailable()
         {
             double change = sodaMachine.tempMoneyTotal - sodaMachine.tempCan.Cost;
@@ -233,8 +237,6 @@ namespace SodaMachine
                 return false;
             }
         }
-
-    
         public string SodaSelection()
         {
             string sodaName = "";
@@ -288,6 +290,11 @@ namespace SodaMachine
                     }
                 }
             }
+            else
+            {
+                UserInterface.ValidSelection();
+                AddQuartersToTempRegister(UserInterface.InsertQuarters());
+            }
         }
         public void AddDimesToTempRegister(int dimes)
         {
@@ -307,6 +314,12 @@ namespace SodaMachine
                         }
                     }
                 }
+            }
+            else
+            {
+                UserInterface.ValidSelection();
+                AddDimesToTempRegister(UserInterface.InsertDimes());
+
             }
         }
         public void AddNicklesToTempRegister(int nickles)
@@ -328,6 +341,11 @@ namespace SodaMachine
                     }
                 }
             }
+            else
+            {
+                UserInterface.ValidSelection();
+                AddNicklesToTempRegister(UserInterface.InsertNickles());
+            }
         }
         public void AddPenniesToTempRegister(int pennies)
         {
@@ -347,6 +365,11 @@ namespace SodaMachine
                         }
                     }
                 }
+            }
+            else
+            {
+                UserInterface.ValidSelection();
+                AddPenniesToTempRegister(UserInterface.InsertPennies());
             }
         }
         public void AddQuarterChangeToWallet()
